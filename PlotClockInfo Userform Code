@@ -1,0 +1,248 @@
+Private L1, L2, L3, L4, L5, L6, L7, L8 As String                                                'Variables to hold locations
+Private D1, D2 As String
+Private ClkTemp As String
+
+
+
+Private Sub cmdClose_Click()
+    
+    Unload Me
+    
+    ActiveWorkbook.Worksheets("Chart").Activate
+    
+End Sub
+
+Private Sub cmdPrint_Click()
+       
+    Response = MsgBox("Are you sure you wish to print the layout shown?", vbYesNo)
+    If Response = vbYes Then
+        ThisWorkbook.Worksheets("ClockPlot").PrintOut
+    End If
+    
+    Unload Me
+    
+End Sub
+
+Private Sub UserForm_Initialize()                                                               'When the userform is initialized locations are set to the following
+    L1 = "Duck Island"
+    L2 = "Triangle"
+    L3 = "Ball Field"
+    L4 = "Soccer Field"
+    L5 = "Candy Cane"
+    L6 = "Duck Island Parking Lot"
+    L7 = "Mall"
+    L8 = "Admin/Design"
+End Sub
+
+Private Sub cbx_Loc_Change()
+    Me.cbx_Clk.Value = ""
+
+     If Me.cbx_Loc.Value = L1 Then                                                           'If user specifies Duck Island as the location then the Duck Island clocks are loaded
+        Me.cbx_Clk.RowSource = "DIClk"                                                       'into cbxClk
+    ElseIf Me.cbx_Loc.Value = L2 Then                                                       'If user specifies Triangle as the location then the Triangle clocks are loaded into cbxClk
+        Me.cbx_Clk.RowSource = "TriClk"                                                    'So on
+    ElseIf Me.cbx_Loc.Value = L3 Then
+        Me.cbx_Clk.RowSource = "BFClk"
+    ElseIf Me.cbx_Loc.Value = L4 Then
+        Me.cbx_Clk.RowSource = "SFClk"
+    ElseIf Me.cbx_Loc.Value = L5 Then
+        Me.cbx_Clk.RowSource = "CCClk"
+    ElseIf Me.cbx_Loc.Value = L6 Then
+        Me.cbx_Clk.RowSource = "DIPClk"
+    ElseIf Me.cbx_Loc.Value = L7 Then
+        Me.cbx_Clk.RowSource = "MClk"
+    ElseIf Me.cbx_Loc.Value = L8 Then
+        Me.cbx_Clk.RowSource = "ADClk"
+    End If
+
+End Sub
+
+Private Sub cbx_Clk_Enter()
+    If Me.cbx_Loc.Value <> L1 Then
+        If Me.cbx_Loc.Value <> L2 Then
+            If Me.cbx_Loc.Value <> L3 Then
+                If Me.cbx_Loc.Value <> L4 Then
+                    If Me.cbx_Loc.Value <> L5 Then
+                        If Me.cbx_Loc.Value <> L6 Then
+                            If Me.cbx_Loc.Value <> L7 Then
+                                If Me.cbx_Loc.Value <> L8 Then
+                                    MsgBox ("Please select a valid location from the list above")
+                                    Me.cbx_Loc.SetFocus
+                                End If
+                            End If
+                        End If
+                    End If
+                End If
+            End If
+        End If
+    End If
+End Sub
+
+Private Sub cmd_ExportPlot_Click()
+    
+    Dim i As Integer                                                                            'Used in while loop below, row incrementer
+    Dim x As Integer
+    Dim j As Integer
+    Dim y As Integer
+    
+    D1 = Me.cbx_Loc.Value                                                                   'Assigning of combobox values to variables
+    D2 = Me.cbx_Clk.Value
+    
+    Worksheets("ClockPlot").Cells(1, 2).Value = D1 & " - " & D2
+    
+    i = 2                                                                                       'i begins at 2 to skip header on Data worksheet
+    j = 282
+    If Me.cbx_Loc.Value = "" Or Me.cbx_Clk.Value = "" Then                                      'Check to see if the runtime input txtbox is blank
+        MsgBox ("Please select a location and clock to proceed")                                'If input is blank notify user, ask if they wish to proceed
+        Me.cbx_Loc.SetFocus
+    Else                                                                                        'If the runtime input is not blank then the loop runs as described above (lines 19-26)
+        With ThisWorkbook
+            With .Worksheets("ClockPlot")
+                .Range("PlotRuntimes").ClearContents
+                .Range("PlotDays").ClearContents
+                .Range("PlotDays").Interior.Color = RGB(255, 255, 255)
+                .Range("PlotStarts").ClearContents
+            End With
+        End With
+            
+        Do While i < 1254
+            If Worksheets("Data").Cells(i, 1).Value = D1 Then
+                ClkTemp = Worksheets("Data").Cells(i, 2).Value
+                If Left(ClkTemp, 1) = D2 Then
+                    If Right(ClkTemp, 1) = "A" Then
+                        Worksheets("ClockPlot").Cells(4, 12).Value = Worksheets("Data").Cells(i, 5).Value
+                        x = 1
+                        If D1 = L2 Or D1 = L8 Then
+                            Do While x < 13
+                                Worksheets("ClockPlot").Cells(x + 3, 2).Value = Worksheets("Data").Cells(i + x - 1, 4).Value
+                                x = x + 1
+                            Loop
+                            i = i + x - 1
+                        Else
+                            Do While x < 33
+                                Worksheets("ClockPlot").Cells(x + 3, 2).Value = Worksheets("Data").Cells(i + x - 1, 4).Value
+                                x = x + 1
+                            Loop
+                            i = i + x - 1
+                        End If
+                    ElseIf Right(ClkTemp, 1) = "B" Then
+                        Worksheets("ClockPlot").Cells(4, 13).Value = Worksheets("Data").Cells(i, 5).Value
+                        x = 1
+                        If D1 = L2 Or D1 = L8 Then
+                            Do While x < 13
+                                Worksheets("ClockPlot").Cells(x + 3, 3).Value = Worksheets("Data").Cells(i + x - 1, 4).Value
+                                x = x + 1
+                            Loop
+                            i = i + x - 1
+                        Else
+                            Do While x < 33
+                                Worksheets("ClockPlot").Cells(x + 3, 3).Value = Worksheets("Data").Cells(i + x - 1, 4).Value
+                                x = x + 1
+                            Loop
+                            i = i + x - 1
+                        End If
+                    ElseIf Right(ClkTemp, 1) = "C" Then
+                        Worksheets("ClockPlot").Cells(4, 14).Value = Worksheets("Data").Cells(i, 5).Value
+                        x = 1
+                        If D1 = L2 Or D1 = L8 Then
+                            Do While x < 13
+                                Worksheets("ClockPlot").Cells(x + 3, 4).Value = Worksheets("Data").Cells(i + x - 1, 4).Value
+                                x = x + 1
+                            Loop
+                            i = i + x - 1
+                        Else
+                            Do While x < 33
+                                Worksheets("ClockPlot").Cells(x + 3, 4).Value = Worksheets("Data").Cells(i + x - 1, 4).Value
+                                x = x + 1
+                            Loop
+                            i = i + x - 1
+                        End If
+                    ElseIf Right(ClkTemp, 1) = "D" Then
+                        Worksheets("ClockPlot").Cells(4, 15).Value = Worksheets("Data").Cells(i, 5).Value
+                        x = 1
+                        If D1 = L2 Or D1 = L8 Then
+                            Do While x < 13
+                                Worksheets("ClockPlot").Cells(x + 3, 5).Value = Worksheets("Data").Cells(i + x - 1, 4).Value
+                                x = x + 1
+                            Loop
+                            i = i + x - 1
+                        Else
+                            Do While x < 33
+                                Worksheets("ClockPlot").Cells(x + 3, 5).Value = Worksheets("Data").Cells(i + x - 1, 4).Value
+                                x = x + 1
+                            Loop
+                            i = i + x - 1
+                        End If
+                    Else
+                        i = i + 1
+                    End If
+                Else
+                    i = i + 1
+                End If
+            Else
+                i = i + 1
+            End If
+        Loop
+        
+        Do While j < 323
+            If Worksheets("Data").Cells(j, 22).Value = D1 Then
+                ClkTemp = Worksheets("Data").Cells(j, 23).Value
+                If Left(ClkTemp, 1) = D2 Then
+                    If Right(ClkTemp, 1) = "A" Then
+                        y = 24
+                        Do While y < 31
+                            If Worksheets("Data").Cells(j, y).Value = 1 Then
+                                Worksheets("ClockPlot").Cells(y - 20, 7).Interior.Color = RGB(0, 0, 0)
+                            Else
+                                Worksheets("ClockPlot").Cells(y - 20, 7).Interior.Color = RGB(255, 255, 255)
+                            End If
+                            y = y + 1
+                        Loop
+                        j = j + 1
+                    ElseIf Right(ClkTemp, 1) = "B" Then
+                        y = 24
+                        Do While y < 31
+                            If Worksheets("Data").Cells(j, y).Value = 1 Then
+                                Worksheets("ClockPlot").Cells(y - 20, 8).Interior.Color = RGB(0, 0, 0)
+                            Else
+                                Worksheets("ClockPlot").Cells(y - 20, 8).Interior.Color = RGB(255, 255, 255)
+                            End If
+                            y = y + 1
+                        Loop
+                        j = j + 1
+                    ElseIf Right(ClkTemp, 1) = "C" Then
+                        y = 24
+                        Do While y < 31
+                            If Worksheets("Data").Cells(j, y).Value = 1 Then
+                                Worksheets("ClockPlot").Cells(y - 20, 9).Interior.Color = RGB(0, 0, 0)
+                            Else
+                                Worksheets("ClockPlot").Cells(y - 20, 9).Interior.Color = RGB(255, 255, 255)
+                            End If
+                            y = y + 1
+                        Loop
+                        j = j + 1
+                    ElseIf Right(ClkTemp, 1) = "D" Then
+                        y = 24
+                        Do While y < 31
+                            If Worksheets("Data").Cells(j, y).Value = 1 Then
+                                Worksheets("ClockPlot").Cells(y - 20, 10).Interior.Color = RGB(0, 0, 0)
+                            Else
+                                Worksheets("ClockPlot").Cells(y - 20, 10).Interior.Color = RGB(255, 255, 255)
+                            End If
+                            y = y + 1
+                        Loop
+                        j = j + 1
+                    Else
+                        j = j + 1
+                    End If
+                Else
+                    j = j + 1
+                End If
+            Else
+                j = j + 1
+            End If
+        Loop
+    End If
+    
+    
+End Sub
