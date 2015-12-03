@@ -1,0 +1,26 @@
+Private Sub cmd_GetDays_Click()
+    GetDays.GetDays
+End Sub
+
+Private Sub cmdEditRuntimes_Click()
+    GetData_ValveTimes.Show
+End Sub
+
+Private Sub cmdGetFlows_Click()
+    Call GetStartTimes
+    Call GetRunTimes
+End Sub
+
+Private Sub cmdPlotClockInfo_Click()
+    ActiveWorkbook.Worksheets("ClockPlot").Activate
+    PlotClockInfo.Show
+End Sub
+
+Private Sub cmdShowLog_Click()
+    ActiveWorkbook.Worksheets("Log").Activate
+End Sub
+
+Private Sub cmdShowMap_Click()
+    ActiveWorkbook.Worksheets("Sheet1").Activate
+    ActiveWorkbook.Worksheets("Sheet1").ScrollBar1.Value = 0
+End Sub
