@@ -1,0 +1,234 @@
+Private Sub CommandButton1_Click()
+'    Dim s As Integer
+'    s = 0
+'    ScrollBar1.Value = 0
+'    Do While s < 10
+'        ScrollBar1.Value = s
+'        Application.Wait (Now + TimeValue("00:00:01"))
+'        s = s + 1
+'    Loop
+
+End Sub
+
+Private Sub ScrollBar1_Change()
+    Dim tl As Integer
+    Dim regs() As Variant
+    
+    Dim u As Integer
+
+    tl = ScrollBar1.Value
+        
+    If tl >= ScrollBar1.Min And tl < ScrollBar1.Max / 40 Then
+        regs = Sheets("Sheet1").Range("Time0Regs").Value
+    ElseIf tl >= ScrollBar1.Max / 40 And tl < ScrollBar1.Max * 2 / 40 Then
+        regs = Sheets("Sheet1").Range("Time1Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 2 / 40 And tl < ScrollBar1.Max * 3 / 40 Then
+        regs = Sheets("Sheet1").Range("Time2Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 3 / 40 And tl < ScrollBar1.Max * 4 / 40 Then
+        regs = Sheets("Sheet1").Range("Time3Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 4 / 40 And tl < ScrollBar1.Max * 5 / 40 Then
+        regs = Sheets("Sheet1").Range("Time4Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 5 / 40 And tl < ScrollBar1.Max * 6 / 40 Then
+        regs = Sheets("Sheet1").Range("Time5Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 6 / 40 And tl < ScrollBar1.Max * 7 / 40 Then
+        regs = Sheets("Sheet1").Range("Time6Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 7 / 40 And tl < ScrollBar1.Max * 8 / 40 Then
+        regs = Sheets("Sheet1").Range("Time7Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 8 / 40 And tl < ScrollBar1.Max * 9 / 40 Then
+        regs = Sheets("Sheet1").Range("Time8Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 9 / 40 And tl < ScrollBar1.Max * 10 / 40 Then
+        regs = Sheets("Sheet1").Range("Time9Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 10 / 40 And tl < ScrollBar1.Max * 11 / 40 Then
+        regs = Sheets("Sheet1").Range("Time10Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 11 / 40 And tl < ScrollBar1.Max * 12 / 40 Then
+        regs = Sheets("Sheet1").Range("Time11Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 12 / 40 And tl < ScrollBar1.Max * 13 / 40 Then
+        regs = Sheets("Sheet1").Range("Time12Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 13 / 40 And tl < ScrollBar1.Max * 14 / 40 Then
+        regs = Sheets("Sheet1").Range("Time13Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 14 / 40 And tl < ScrollBar1.Max * 15 / 40 Then
+        regs = Sheets("Sheet1").Range("Time14Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 15 / 40 And tl < ScrollBar1.Max * 16 / 40 Then
+        regs = Sheets("Sheet1").Range("Time15Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 16 / 40 And tl < ScrollBar1.Max * 17 / 40 Then
+        regs = Sheets("Sheet1").Range("Time16Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 17 / 40 And tl < ScrollBar1.Max * 18 / 40 Then
+        regs = Sheets("Sheet1").Range("Time17Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 18 / 40 And tl < ScrollBar1.Max * 19 / 40 Then
+        regs = Sheets("Sheet1").Range("Time18Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 19 / 40 And tl < ScrollBar1.Max * 20 / 40 Then
+        regs = Sheets("Sheet1").Range("Time19Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 20 / 40 And tl < ScrollBar1.Max * 21 / 40 Then
+        regs = Sheets("Sheet1").Range("Time20Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 21 / 40 And tl < ScrollBar1.Max * 22 / 40 Then
+        regs = Sheets("Sheet1").Range("Time21Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 22 / 40 And tl < ScrollBar1.Max * 23 / 40 Then
+        regs = Sheets("Sheet1").Range("Time22Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 23 / 40 And tl < ScrollBar1.Max * 24 / 40 Then
+        regs = Sheets("Sheet1").Range("Time23Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 24 / 40 And tl < ScrollBar1.Max * 25 / 40 Then
+        regs = Sheets("Sheet1").Range("Time24Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 25 / 40 And tl < ScrollBar1.Max * 26 / 40 Then
+        regs = Sheets("Sheet1").Range("Time25Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 26 / 40 And tl < ScrollBar1.Max * 27 / 40 Then
+        regs = Sheets("Sheet1").Range("Time26Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 27 / 40 And tl < ScrollBar1.Max * 28 / 40 Then
+        regs = Sheets("Sheet1").Range("Time27Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 28 / 40 And tl < ScrollBar1.Max * 29 / 40 Then
+        regs = Sheets("Sheet1").Range("Time28Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 29 / 40 And tl < ScrollBar1.Max * 30 / 40 Then
+        regs = Sheets("Sheet1").Range("Time29Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 30 / 40 And tl < ScrollBar1.Max * 31 / 40 Then
+        regs = Sheets("Sheet1").Range("Time30Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 31 / 40 And tl < ScrollBar1.Max * 32 / 40 Then
+        regs = Sheets("Sheet1").Range("Time31Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 32 / 40 And tl < ScrollBar1.Max * 33 / 40 Then
+        regs = Sheets("Sheet1").Range("Time32Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 33 / 40 And tl < ScrollBar1.Max * 34 / 40 Then
+        regs = Sheets("Sheet1").Range("Time33Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 34 / 40 And tl < ScrollBar1.Max * 35 / 40 Then
+        regs = Sheets("Sheet1").Range("Time34Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 35 / 40 And tl < ScrollBar1.Max * 36 / 40 Then
+        regs = Sheets("Sheet1").Range("Time35Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 36 / 40 And tl < ScrollBar1.Max * 37 / 40 Then
+        regs = Sheets("Sheet1").Range("Time36Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 37 / 40 And tl < ScrollBar1.Max * 38 / 40 Then
+        regs = Sheets("Sheet1").Range("Time37Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 38 / 40 And tl < ScrollBar1.Max * 39 / 40 Then
+        regs = Sheets("Sheet1").Range("Time38Regs").Value
+    ElseIf tl >= ScrollBar1.Max * 39 / 40 And tl < ScrollBar1.Max Then
+        regs = Sheets("Sheet1").Range("Time39Regs").Value
+    ElseIf tl = ScrollBar1.Max Then
+        regs = Sheets("Sheet1").Range("Time40Regs").Value
+    End If
+    
+'In this next section I will have to check what integer (1-32) each cell is and then assign the proper station
+
+    u = 1
+    Do While u < 25
+        If regs(1, 1) = u Or regs(2, 1) = u Then
+            Sheets("Sheet1").Range("RegDI" & u).Interior.ColorIndex = 1
+        Else
+            Sheets("Sheet1").Range("RegDI" & u).Interior.ColorIndex = 2
+        End If
+        u = u + 1
+    Loop
+    
+    u = 1
+    If regs(3, 1) = u Then
+        Sheets("Sheet1").Range("RegT" & u).Interior.ColorIndex = 1
+    Else
+        Sheets("Sheet1").Range("RegT" & u).Interior.ColorIndex = 2
+    End If
+    
+    u = 1
+    Do While u < 25
+        If regs(4, 1) = u Or regs(5, 1) = u Or regs(6, 1) = u Or regs(7, 1) = u Then
+            Sheets("Sheet1").Range("RegBFA" & u).Interior.ColorIndex = 1
+        Else
+            Sheets("Sheet1").Range("RegBFA" & u).Interior.ColorIndex = 2
+        End If
+        u = u + 1
+    Loop
+    
+    u = 1
+    Do While u < 20
+        If regs(8, 1) = u Or regs(9, 1) = u Or regs(10, 1) = u Or regs(11, 1) = u Then
+            Sheets("Sheet1").Range("RegBFB" & u).Interior.ColorIndex = 1
+        Else
+            Sheets("Sheet1").Range("RegBFB" & u).Interior.ColorIndex = 2
+        End If
+        u = u + 1
+    Loop
+        
+    u = 1
+    Do While u < 30
+        If regs(12, 1) = u Or regs(13, 1) = u Or regs(14, 1) = u Or regs(15, 1) = u Then
+            Sheets("Sheet1").Range("RegSFA" & u).Interior.ColorIndex = 1
+        Else
+            Sheets("Sheet1").Range("RegSFA" & u).Interior.ColorIndex = 2
+        End If
+        u = u + 1
+    Loop
+        
+    u = 1
+    Do While u < 30
+        If regs(16, 1) = u Or regs(17, 1) = u Or regs(18, 1) = u Or regs(19, 1) = u Then
+            Sheets("Sheet1").Range("RegSFB" & u).Interior.ColorIndex = 1
+        Else
+            Sheets("Sheet1").Range("RegSFB" & u).Interior.ColorIndex = 2
+        End If
+        u = u + 1
+    Loop
+        
+    u = 1
+    Do While u < 13
+        If regs(20, 1) = u Or regs(21, 1) = u Or regs(22, 1) = u Or regs(23, 1) = u Then
+            Sheets("Sheet1").Range("RegSFC" & u).Interior.ColorIndex = 1
+        Else
+            Sheets("Sheet1").Range("RegSFC" & u).Interior.ColorIndex = 2
+        End If
+        u = u + 1
+    Loop
+        
+    u = 1
+    Do While u < 25
+        If regs(24, 1) = u Or regs(25, 1) = u Or regs(26, 1) = u Or regs(27, 1) = u Then
+            Sheets("Sheet1").Range("RegCCA" & u).Interior.ColorIndex = 1
+        Else
+            Sheets("Sheet1").Range("RegCCA" & u).Interior.ColorIndex = 2
+        End If
+        u = u + 1
+    Loop
+        
+    u = 1
+    Do While u < 13
+        If regs(28, 1) = u Or regs(29, 1) = u Or regs(30, 1) = u Then
+            Sheets("Sheet1").Range("RegCCB" & u).Interior.ColorIndex = 1
+        Else
+            Sheets("Sheet1").Range("RegCCB" & u).Interior.ColorIndex = 2
+        End If
+        u = u + 1
+    Loop
+        
+    u = 1
+    Do While u < 16
+        If regs(31, 1) = u Or regs(32, 1) = u Or regs(33, 1) = u Or regs(34, 1) = u Then
+            Sheets("Sheet1").Range("RegCCC" & u).Interior.ColorIndex = 1
+        Else
+            Sheets("Sheet1").Range("RegCCC" & u).Interior.ColorIndex = 2
+        End If
+        u = u + 1
+    Loop
+        
+    u = 1
+    Do While u < 13
+        If regs(35, 1) = u Then
+            Sheets("Sheet1").Range("RegDIP" & u).Interior.ColorIndex = 1
+        Else
+            Sheets("Sheet1").Range("RegDIP" & u).Interior.ColorIndex = 2
+        End If
+        u = u + 1
+    Loop
+        
+    u = 1
+    Do While u < 30
+    If regs(36, 1) = u Or regs(37, 1) = u Or regs(38, 1) = u Or regs(39, 1) = u Then
+            Sheets("Sheet1").Range("RegM" & u).Interior.ColorIndex = 1
+        Else
+            Sheets("Sheet1").Range("RegM" & u).Interior.ColorIndex = 2
+        End If
+        u = u + 1
+    Loop
+        
+    u = 1
+    Do While u < 8
+        If regs(40, 1) = u Or regs(41, 1) = u Then
+            Sheets("Sheet1").Range("RegAD" & u).Interior.ColorIndex = 1
+        Else
+            Sheets("Sheet1").Range("RegAD" & u).Interior.ColorIndex = 2
+        End If
+        u = u + 1
+    Loop
+    
+End Sub
