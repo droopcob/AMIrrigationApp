@@ -1,0 +1,206 @@
+
+Private L1, L2, L3, L4, L5, L6, L7, L8 As String                                                'Variables to hold locations
+Public D1, D2, D3 As String                                                                     'Variables to hold contents of combo boxes
+
+Private Sub cbtnChange_Click()                                                                  'Code run when change button is clicked
+
+    Dim i As Integer                                                                            'Used in while loop below, row incrementer
+    Dim mbResult As Integer                                                                     'Used in case select below to store answer from msgbox
+    Dim mbSuccess As Variant
+    
+    D1 = Me.cbxLocation.Value                                                                   'Assigning of combobox values to variables
+    D2 = Me.cbxClkProg.Value
+    D3 = Me.cbxStation.Value
+    
+    i = 2                                                                                       'i begins at 2 to skip header on Data worksheet
+    If Me.tbxRuntime.Value = "" Then                                                            'Check to see if the runtime inpot txtbox is blank
+        mbResult = MsgBox("Runtime input is blank.  Do you wish to proceed?", vbYesNo)          'If input is blank notify user, ask if they wish to proceed
+        Select Case mbResult                                                                    'Case select for msgbox answer
+            Case vbYes                                                                          'If yes then enter loop to determine which location, clock/program, and zone runtime is to be changed
+                Do While i < 1254                                                               'Locations: A2-A1253, ClkProgs: B2-B1253, Stations: C2-C1253, Runtimes: D2-D1253
+                    If Worksheets("Data").Cells(i, 1).Value = D1 Then                           'Check if A2=cbxLocation input, check if B2=cbxclkprog input, check if C2=cbxStation input if all of
+                        If Worksheets("Data").Cells(i, 2).Value = D2 Then                           'these match then change the runtime for the row to the specified value, if one or all of the
+                            If Worksheets("Data").Cells(i, 3).Value = D3 Then                       'inputs dont match then move on to the next row A3, B3, C3 and so on.
+                                Worksheets("Data").Cells(i, 4).Value = Me.tbxRuntime.Value
+                                i = 1253                                                        'When a row match is found advance i to 1253 to exit loop
+                            Else
+                                i = i + 1                                                       'If any input doesnt match the corresponding row value advance i by one and loop
+                            End If
+                        Else
+                            i = i + 1
+                        End If
+                    Else
+                        i = i + 1
+                    End If
+                Loop
+            Case vbNo                                                                           'If the user answered no to the msgbox indicating that the runtime input was blank then the sub is terminated and no change is made to any runtime
+                Exit Sub
+        End Select
+    Else                                                                                        'If the runtime input is not blank then the loop runs as described above (lines 19-26)
+        Do While i < 1254
+            If Worksheets("Data").Cells(i, 1).Value = D1 Then
+                If Worksheets("Data").Cells(i, 2).Value = D2 Then
+                    If Worksheets("Data").Cells(i, 3).Value = D3 Then
+                        Worksheets("Log").Range("A65536").End(xlUp).Offset(1, 0).Value = Date
+                        Worksheets("Log").Range("B65536").End(xlUp).Offset(1, 0).Value = Time
+                        Worksheets("Log").Range("C65536").End(xlUp).Offset(1, 0).Value = D1
+                        Worksheets("Log").Range("D65536").End(xlUp).Offset(1, 0).Value = D2
+                        Worksheets("Log").Range("E65536").End(xlUp).Offset(1, 0).Value = D3
+                        Worksheets("Log").Range("F65536").End(xlUp).Offset(1, 0).Value = Worksheets("Data").Cells(i, 4).Value
+                        Worksheets("Log").Range("G65536").End(xlUp).Offset(1, 0).Value = Me.tbxRuntime.Value
+                        Worksheets("Log").Range("H65536").End(xlUp).Offset(1, 0).Value = Me.tbxReason.Value
+                        Worksheets("Data").Cells(i, 4).Value = Me.tbxRuntime.Value
+                        mbSuccess = MsgBox("Runtime successfully changed", vbOKCancel)
+                        If mbSuccess = vbOK Then
+                            Unload Me
+                        End If
+                        i = 1253
+                    Else
+                        i = i + 1
+                    End If
+                Else
+                    i = i + 1
+                End If
+            Else
+                i = i + 1
+            End If
+        Loop
+    End If
+
+End Sub
+
+Private Sub UserForm_Initialize()                                                               'When the userform is initialized locations are set to the following
+    L1 = "Duck Island"
+    L2 = "Triangle"
+    L3 = "Ball Field"
+    L4 = "Soccer Field"
+    L5 = "Candy Cane"
+    L6 = "Duck Island Parking Lot"
+    L7 = "Mall"
+    L8 = "Admin/Design"
+End Sub
+
+
+Private Sub cbxLocation_Change()                                                                'Code runs when user changes the value of cbxLocation
+    Me.cbxClkProg.Value = ""                                                                    'If cbxLocation is changed contents of cbxClkProg and cbxStation are cleared
+    Me.cbxStation.Value = ""
+    
+    If Me.cbxLocation.Value = L1 Then                                                           'If user specifies Duck Island as the location then the Duck Island clock/programs are loaded
+        Me.cbxClkProg.RowSource = "DIClkProg"                                                       'into cbxClkProg
+    ElseIf Me.cbxLocation.Value = L2 Then                                                       'If user specifies Triangle as the location then the Triangle clock/programs are loaded into cbxClkProg
+        Me.cbxClkProg.RowSource = "TClkProg"                                                    'So on
+    ElseIf Me.cbxLocation.Value = L3 Then
+        Me.cbxClkProg.RowSource = "BFClkProg"
+    ElseIf Me.cbxLocation.Value = L4 Then
+        Me.cbxClkProg.RowSource = "SFClkProg"
+    ElseIf Me.cbxLocation.Value = L5 Then
+        Me.cbxClkProg.RowSource = "CCClkProg"
+    ElseIf Me.cbxLocation.Value = L6 Then
+        Me.cbxClkProg.RowSource = "DIPClkProg"
+    ElseIf Me.cbxLocation.Value = L7 Then
+        Me.cbxClkProg.RowSource = "MClkProg"
+    ElseIf Me.cbxLocation.Value = L8 Then
+        Me.cbxClkProg.RowSource = "ADClkProg"
+    Else: Me.cbxClkProg.Value = "Please select a Location"                                      'If no recognized location is chosen then cbxClkProg displays a msg
+    End If
+End Sub
+        
+Private Sub cbxClkProg_Change()                                                                 'Code runs when user changes cbxClkProg
+    Me.cbxStation.Value = ""                                                                    'When user changes cbxClkProg the contents of cbxStation are cleared
+
+    If Me.cbxLocation.Value = L1 Then                                                           'Check to see which location was chosen then check to see which clock/program was chosen
+        If Me.cbxClkProg.Value = "AA" Then                                                          'then load the corresponding stations into cbxStation
+            Me.cbxStation.RowSource = "DIAAStations"
+        Else: Me.cbxStation.RowSource = "DIBAStations"
+        End If
+    ElseIf Me.cbxLocation.Value = L2 Then
+        Me.cbxStation.RowSource = "TAAStations"
+    ElseIf Me.cbxLocation.Value = L3 Then
+        If Me.cbxClkProg.Value = "AA" Then
+            Me.cbxStation.RowSource = "BFAAStations"
+        ElseIf Me.cbxClkProg.Value = "AB" Then
+            Me.cbxStation.RowSource = "BFABStations"
+        ElseIf Me.cbxClkProg.Value = "AC" Then
+            Me.cbxStation.RowSource = "BFACStations"
+        ElseIf Me.cbxClkProg.Value = "AD" Then
+            Me.cbxStation.RowSource = "BFADStations"
+        ElseIf Me.cbxClkProg.Value = "BA" Then
+            Me.cbxStation.RowSource = "BFBAStations"
+        ElseIf Me.cbxClkProg.Value = "BB" Then
+            Me.cbxStation.RowSource = "BFBBStations"
+        ElseIf Me.cbxClkProg.Value = "BC" Then
+            Me.cbxStation.RowSource = "BFBCStations"
+        Else: Me.cbxStation.RowSource = "BFBDStations"
+        End If
+    ElseIf Me.cbxLocation.Value = L4 Then
+        If Me.cbxClkProg.Value = "AA" Then
+            Me.cbxStation.RowSource = "SFAAStations"
+        ElseIf Me.cbxClkProg.Value = "AB" Then
+            Me.cbxStation.RowSource = "SFABStations"
+        ElseIf Me.cbxClkProg.Value = "AC" Then
+            Me.cbxStation.RowSource = "SFACStations"
+        ElseIf Me.cbxClkProg.Value = "AD" Then
+            Me.cbxStation.RowSource = "SFADStations"
+        ElseIf Me.cbxClkProg.Value = "BA" Then
+            Me.cbxStation.RowSource = "SFBAStations"
+        ElseIf Me.cbxClkProg.Value = "BB" Then
+            Me.cbxStation.RowSource = "SFBBStations"
+        ElseIf Me.cbxClkProg.Value = "BC" Then
+            Me.cbxStation.RowSource = "SFBCStations"
+        ElseIf Me.cbxClkProg.Value = "BD" Then
+            Me.cbxStation.RowSource = "SFBDStations"
+        ElseIf Me.cbxClkProg.Value = "CA" Then
+            Me.cbxStation.RowSource = "SFCAStations"
+        ElseIf Me.cbxClkProg.Value = "CB" Then
+            Me.cbxStation.RowSource = "SFCBStations"
+        ElseIf Me.cbxClkProg.Value = "CC" Then
+            Me.cbxStation.RowSource = "SFCCStations"
+        Else: Me.cbxStation.RowSource = "SFCDStations"
+        End If
+    ElseIf Me.cbxLocation.Value = L5 Then
+        If Me.cbxClkProg.Value = "AA" Then
+            Me.cbxStation.RowSource = "CCAAStations"
+        ElseIf Me.cbxClkProg.Value = "AB" Then
+            Me.cbxStation.RowSource = "CCABStations"
+        ElseIf Me.cbxClkProg.Value = "AC" Then
+            Me.cbxStation.RowSource = "CCACStations"
+        ElseIf Me.cbxClkProg.Value = "AD" Then
+            Me.cbxStation.RowSource = "CCADStations"
+        ElseIf Me.cbxClkProg.Value = "BA" Then
+            Me.cbxStation.RowSource = "CCBAStations"
+        ElseIf Me.cbxClkProg.Value = "BB" Then
+            Me.cbxStation.RowSource = "CCBBStations"
+        ElseIf Me.cbxClkProg.Value = "BC" Then
+            Me.cbxStation.RowSource = "CCBCStations"
+        ElseIf Me.cbxClkProg.Value = "CA" Then
+            Me.cbxStation.RowSource = "CCCAStations"
+        ElseIf Me.cbxClkProg.Value = "CB" Then
+            Me.cbxStation.RowSource = "CCCBStations"
+        ElseIf Me.cbxClkProg.Value = "CC" Then
+            Me.cbxStation.RowSource = "CCCCStations"
+        Else: Me.cbxStation.RowSource = "CCCDStations"
+        End If
+    ElseIf Me.cbxLocation.Value = L6 Then
+        Me.cbxStation.RowSource = "DIPAAStations"
+    ElseIf Me.cbxLocation.Value = L7 Then
+        If Me.cbxClkProg.Value = "AA" Then
+            Me.cbxStation.RowSource = "MAAStations"
+        ElseIf Me.cbxClkProg.Value = "AB" Then
+            Me.cbxStation.RowSource = "MABStations"
+        ElseIf Me.cbxClkProg.Value = "AC" Then
+            Me.cbxStation.RowSource = "MACStations"
+        Else: Me.cbxStation.RowSource = "MADStations"
+        End If
+    ElseIf Me.cbxLocation.Value = L8 Then
+        If Me.cbxClkProg.Value = "AA" Then
+            Me.cbxStation.RowSource = "ADAAStations"
+        Else: Me.cbxStation.RowSource = "ADACStations"
+        End If
+    Else: Me.cbxStation.Value = "Please select a location and clock/program"                        'If no recognized clock/program was chosen display msg in cbxStation
+    End If
+End Sub
+
+
+
+
+
