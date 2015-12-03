@@ -1,0 +1,78 @@
+Dim D As String
+Dim i As Integer
+Dim j As Integer
+
+
+Sub GetDays()
+
+D = Sheets("Chart").Cells(2, 3).Value                                                                                   'Sets D equal to the day selected in listbox on "Chart" worksheet
+    If Sheets("Data").Cells(281, 12).Value = D Then                                                                     'Checks to see if "Monday" was selected
+        Sheets("Chart").Cells(2, 4).Value = D                                                                           'If "Monday" was selected set the Day indicator to "Monday"
+        Sheets("Sheet1").Cells(290, 274).Value = D
+        For j = 1 To 41                                                                                                 'Row incrementer
+            Sheets("Data").Cells(1 + j, 45).Value = Sheets("Data").Cells(281 + j, 12).Value                             'If "Monday" was selected sets the "Day On/Off" indicator to the "Monday" column of the "Program operational days" Table
+        Next j
+        Sheets("Data").Cells(46, 45).Value = Sheets("Data").Cells(348, 12).Value
+    Else
+        If Sheets("Data").Cells(281, 13).Value = D Then                                                                 'Checks if "Tuesday" was selected and repeats
+            Sheets("Chart").Cells(2, 4).Value = D
+            Sheets("Sheet1").Cells(290, 274).Value = D
+            For j = 1 To 41
+                Sheets("Data").Cells(1 + j, 45).Value = Sheets("Data").Cells(281 + j, 13).Value
+            Next j
+            Sheets("Data").Cells(46, 45).Value = Sheets("Data").Cells(348, 13).Value
+        Else
+            If Sheets("Data").Cells(281, 14).Value = D Then
+                Sheets("Chart").Cells(2, 4).Value = D
+                Sheets("Sheet1").Cells(290, 274).Value = D
+                For j = 1 To 41
+                    Sheets("Data").Cells(1 + j, 45).Value = Sheets("Data").Cells(281 + j, 14).Value
+                Next j
+                Sheets("Data").Cells(46, 45).Value = Sheets("Data").Cells(348, 14).Value
+            Else
+                If Sheets("Data").Cells(281, 15).Value = D Then
+                    Sheets("Chart").Cells(2, 4).Value = D
+                    Sheets("Sheet1").Cells(290, 274).Value = D
+                    For j = 1 To 41
+                        Sheets("Data").Cells(1 + j, 45).Value = Sheets("Data").Cells(281 + j, 15).Value
+                    Next j
+                    Sheets("Data").Cells(46, 45).Value = Sheets("Data").Cells(348, 15).Value
+                Else
+                    If Sheets("Data").Cells(281, 16).Value = D Then
+                        Sheets("Chart").Cells(2, 4).Value = D
+                        Sheets("Sheet1").Cells(290, 274).Value = D
+                        For j = 1 To 41
+                            Sheets("Data").Cells(1 + j, 45).Value = Sheets("Data").Cells(281 + j, 16).Value
+                        Next j
+                        Sheets("Data").Cells(46, 45).Value = Sheets("Data").Cells(348, 16).Value
+                    Else
+                        If Sheets("Data").Cells(281, 17).Value = D Then
+                            Sheets("Chart").Cells(2, 4).Value = D
+                            Sheets("Sheet1").Cells(290, 274).Value = D
+                            For j = 1 To 41
+                                Sheets("Data").Cells(1 + j, 45).Value = Sheets("Data").Cells(281 + j, 17).Value
+                            Next j
+                            Sheets("Data").Cells(46, 45).Value = Sheets("Data").Cells(348, 17).Value
+                        Else
+                            If Sheets("Data").Cells(281, 18).Value = D Then
+                                Sheets("Chart").Cells(2, 4).Value = D
+                                Sheets("Sheet1").Cells(290, 274).Value = D
+                                For j = 1 To 41
+                                    Sheets("Data").Cells(1 + j, 45).Value = Sheets("Data").Cells(281 + j, 18).Value
+                                Next j
+                                Sheets("Data").Cells(46, 45).Value = Sheets("Data").Cells(348, 18).Value
+                            Else
+                                Sheets("Chart").Cells(2, 4).Value = Sheets("Chart").Cells(2, 4).Value
+                                For j = 1 To 41
+                                    Sheets("Data").Cells(1 + j, 45).Value = ""
+                                Next j
+                                Sheets("Data").Cells(46, 45).Value = Sheets("Data").Cells(348, 19).Value
+                            End If
+                        End If
+                    End If
+                End If
+            End If
+        End If
+    End If
+
+End Sub
