@@ -2,6 +2,7 @@
 Application for the organization and scheduling of irrigation in Ann Morrison Park in Boise, ID
 
 Purpose
+
 	An application that helps organize and plan irrigation schedules in Ann Morrison Park
 
 	Has several tools and functions explained below
