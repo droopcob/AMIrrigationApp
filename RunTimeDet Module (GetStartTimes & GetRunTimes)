@@ -1,0 +1,59 @@
+Dim i As Integer
+Dim j As Integer
+Dim k As Integer
+Dim l As Integer
+Dim D As Integer
+
+Sub GetStartTimes()
+For j = 1 To 41
+    D = Worksheets("Data").Cells(1 + j, 12).Value                                                            '0
+    i = 1
+    Do While i < 42
+        If Worksheets("Data").Cells(142, 12 + i).Value > D Then
+            If Worksheets("Data").Cells(142, 11 + i).Value <= D Then
+                If Worksheets("Data").Cells(1 + j, 46).Value <> 0 Then
+                    If Worksheets("Data").Cells(1 + j, 46).Value > Worksheets("Data").Cells(142, 11 + i).Value Then
+                        Worksheets("Data").Cells(143 + j, 11 + i).Value = 1
+                    Else
+                        Worksheets("Data").Cells(143 + j, 11 + i).Value = ""
+                    End If
+                Else
+                    Worksheets("Data").Cells(143 + j, 11 + i).Value = ""
+                End If
+            Else
+                Worksheets("Data").Cells(143 + j, 11 + i).Value = ""
+            End If
+        Else
+            Worksheets("Data").Cells(143 + j, 11 + i).Value = ""
+        End If
+    i = i + 1
+    Loop
+Next j
+
+End Sub
+
+Sub GetRunTimes()
+For k = 1 To 41
+    l = 1
+    Do While l < 42
+        If Worksheets("Data").Cells(143 + k, 12 + l).Value <> 1 Then
+            If Worksheets("Data").Cells(143 + k, 11 + l).Value = 1 Then
+                If Worksheets("Data").Cells(142, 12 + l).Value < Worksheets("Data").Cells(1 + k, 46).Value Then
+                    Worksheets("Data").Cells(143 + k, 12 + l).Value = 1
+                Else
+                    Worksheets("Data").Cells(143 + k, 12 + l).Value = ""
+                End If
+            Else
+                Worksheets("Data").Cells(143 + k, 12 + l).Value = ""
+            End If
+        Else
+            Worksheets("Data").Cells(143 + k, 12 + l).Value = Worksheets("Data").Cells(143 + k, 12 + l).Value
+        End If
+    l = l + 1
+    Loop
+Next k
+End Sub
+
+Sub GetRPRuntimes()
+
+End Sub
